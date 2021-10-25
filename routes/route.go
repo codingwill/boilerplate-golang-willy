@@ -17,7 +17,12 @@ func Route() {
 
 	app.Get("/welcome", handler.HandlerWelcome)
 	app.Get("/welcome/:name", handler.HandlerWelcome)
+
+	// simple password generator
 	app.Get("/password/:id", handler.HandlerGetPassword)
+
+	// simple randomizer
+	app.Get("/randomizer/generate/:type/:option", handler.HandlerGetRandomizer)
 
 	app.Listen(":3001")
 }

@@ -14,6 +14,9 @@ import (
 func HandlerGetPassword(c *fiber.Ctx) error {
 
 	id, err := strconv.Atoi(c.Params("id"))
+	if err != nil {
+		c.SendString(fmt.Sprintf("There is an error occured. Error: %s", err))
+	}
 	response := services.ServiceGetPassword(id)
 
 	data, err := json.MarshalIndent(response, "", "	")
