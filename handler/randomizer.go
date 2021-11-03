@@ -18,7 +18,15 @@ func HandlerGetRandomizer(c *fiber.Ctx) error {
 	dataType := c.Params("type")
 
 	if dataType == "number" {
-		arrayInt := models.RandomArrayInteger{[]int32{1, 2, 3, 4, 5}}
+		arrayInt := models.RandomArrayInteger{
+			Data: []int32{
+				1,
+				2,
+				3,
+				4,
+				5,
+			},
+		}
 		response = services.ServiceGetRandomizeNumber(arrayInt, option)
 	} else if dataType == "string" {
 		arrayString := new(models.RandomArrayString)
@@ -27,7 +35,7 @@ func HandlerGetRandomizer(c *fiber.Ctx) error {
 		}
 
 		// defining interface and its type
-		var interfaceRandomizer interfaces.IServiceRandomizer = &models.RandomArrayString{arrayString.Data}
+		var interfaceRandomizer interfaces.IServiceRandomizer = &models.RandomArrayString{Data: arrayString.Data}
 
 		randomizedList := interfaceRandomizer.Randomize()
 
@@ -42,7 +50,17 @@ func HandlerGetRandomizer(c *fiber.Ctx) error {
 func HandlerGetRandomizeTest(c *fiber.Ctx) error {
 
 	// defining interface and its type
-	var interfaceRandomizer interfaces.IServiceRandomizer = &models.RandomArrayString{[]string{"Mike", "Ujang", "Kyle", "Ecin", "Ilham", "Penny", "Sheldon"}}
+	var interfaceRandomizer interfaces.IServiceRandomizer = &models.RandomArrayString{
+		Data: []string{
+			"Mike",
+			"Ujang",
+			"Kyle",
+			"Ecin",
+			"Ilham",
+			"Penny",
+			"Sheldon",
+		},
+	}
 	randomizedList := interfaceRandomizer.Randomize()
 
 	fmt.Printf("in handler: %s\n", randomizedList)
