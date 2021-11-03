@@ -1,9 +1,21 @@
 package services
 
 import (
+	"fmt"
 	"math/rand"
 	"projectstructuring/models"
 )
+
+type ServiceRandomize struct {
+	config string
+}
+
+func (sr ServiceRandomize) ServiceGetRandomize() (result string) {
+	sr.config = "Hello World"
+	result = sr.config
+	fmt.Println("tes service get randomize")
+	return result
+}
 
 func ServiceGetRandomizeNumber(numbers models.RandomArrayInteger, option string) (result models.Response) {
 	result.Status = 200
@@ -36,6 +48,15 @@ func ServiceGetRandomizeString(words *models.RandomArrayString, option string) (
 		}
 		result.Data = words.Data
 	}
+
+	return result
+}
+
+func ServiceGetResponse(list []string) (result models.Response) {
+	result.Status = 200
+	result.From = "system"
+	result.Message = "Fetching data success"
+	result.Data = list
 
 	return result
 }
