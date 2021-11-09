@@ -23,6 +23,7 @@ func Route() {
 
 	// simple randomizer
 	app.Get("/randomizer/generate/:type/:option", handler.HandlerGetRandomizer)
+	app.Get("/randomizer/test", handler.HandlerGetRandomizeTest)
 
 	app.Listen(":3001")
 }

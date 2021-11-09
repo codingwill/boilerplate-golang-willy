@@ -10,7 +10,7 @@ type RandomArrayString struct {
 	Data []string `json:"data"`
 }
 
-func (number RandomArrayInteger) Randomize() (result []int32) {
+func (number *RandomArrayInteger) Randomize() (result []int32) {
 	// Fisher-Yates algo
 	for i := len(number.Data) - 1; i >= 1; i-- {
 		j := rand.Intn(i + 1)
@@ -20,7 +20,7 @@ func (number RandomArrayInteger) Randomize() (result []int32) {
 	return result
 }
 
-func (words RandomArrayString) Randomize() (result []string) {
+func (words *RandomArrayString) Randomize() (result []string) {
 	// Fisher-Yates algo
 	for i := len(words.Data) - 1; i >= 1; i-- {
 		j := rand.Intn(i + 1)

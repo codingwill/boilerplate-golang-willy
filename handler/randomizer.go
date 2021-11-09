@@ -1,10 +1,8 @@
 package handler
 
 import (
-	//"projectstructuring/services"
-
-	"encoding/json"
 	"fmt"
+	"projectstructuring/interfaces"
 	"projectstructuring/models"
 	"projectstructuring/services"
 
@@ -14,31 +12,60 @@ import (
 func HandlerGetRandomizer(c *fiber.Ctx) error {
 
 	// variable declaration
-	var data []byte
-	var err error
 	var response models.Response
 
 	option := c.Params("option")
 	dataType := c.Params("type")
 
 	if dataType == "number" {
-		arrayInt := models.RandomArrayInteger{[]int32{1, 2, 3, 4, 5}}
+		arrayInt := models.RandomArrayInteger{
+			Data: []int32{
+				1,
+				2,
+				3,
+				4,
+				5,
+			},
+		}
 		response = services.ServiceGetRandomizeNumber(arrayInt, option)
 	} else if dataType == "string" {
 		arrayString := new(models.RandomArrayString)
 		if err := c.BodyParser(arrayString); err != nil {
 			c.SendString(fmt.Sprintf("There is an error occured. Error: %s", err))
 		}
-		response = services.ServiceGetRandomizeString(arrayString, option)
+
+		// defining interface and its type
+		var interfaceRandomizer interfaces.IServiceRandomizer = &models.RandomArrayString{Data: arrayString.Data}
+
+		randomizedList := interfaceRandomizer.Randomize()
+
+		response = services.ServiceGetResponse(randomizedList)
 	}
 
-	// construct in json with some formatting
-	data, err = json.MarshalIndent(response, "", "	")
+	// return JSON data
+	return c.JSON(response)
 
-	if err != nil {
-		c.SendString(fmt.Sprintf("There is an error occured. Error: %s", err))
+}
+
+func HandlerGetRandomizeTest(c *fiber.Ctx) error {
+
+	// defining interface and its type
+	var interfaceRandomizer interfaces.IServiceRandomizer = &models.RandomArrayString{
+		Data: []string{
+			"Mike",
+			"Ujang",
+			"Kyle",
+			"Ecin",
+			"Ilham",
+			"Penny",
+			"Sheldon",
+		},
 	}
+	randomizedList := interfaceRandomizer.Randomize()
 
-	return c.SendString(string(data))
+	fmt.Printf("in handler: %s\n", randomizedList)
 
+	output := services.ServiceGetResponse(randomizedList)
+
+	return c.JSON(output)
 }
