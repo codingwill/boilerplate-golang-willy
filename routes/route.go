@@ -25,5 +25,12 @@ func Route() {
 	app.Get("/randomizer/generate/:type/:option", handler.HandlerGetRandomizer)
 	app.Get("/randomizer/test", handler.HandlerGetRandomizeTest)
 
+	// insert data
+	app.Post("/person/:first/:last/:email", handler.HandlerPostNewPerson)
+
+	// get data
+	app.Get("/person/:id", handler.HandlerGetPersonById)
+	app.Get("/person", handler.HandlerGetPersonList)
+
 	app.Listen(":3001")
 }
