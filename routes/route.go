@@ -26,11 +26,14 @@ func Route() {
 	app.Get("/randomizer/test", handler.HandlerGetRandomizeTest)
 
 	// insert data
-	app.Post("/person/:first/:last/:email", handler.HandlerPostNewPerson)
+	app.Post("/person/create", handler.HandlerPostNewPerson)
 
 	// get data
 	app.Get("/person/:id", handler.HandlerGetPersonById)
 	app.Get("/person", handler.HandlerGetPersonList)
+
+	// delete data
+	app.Delete("/person/delete/:id", handler.HandlerDeletePersonById)
 
 	app.Listen(":3001")
 }

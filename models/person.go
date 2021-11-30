@@ -5,9 +5,10 @@ import (
 )
 
 type Person struct {
-	FirstName string `db:"first_name"`
-	LastName  string `db:"last_name"`
-	Email     string
+	FirstName string `db:"first_name" json:"firstName"`
+	LastName  string `db:"last_name" json:"lastName"`
+	Email     string `db:"email" json:"email"`
+	Id        int64  `db:"id" json:"id"`
 }
 
 type Place struct {
